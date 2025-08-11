@@ -16,6 +16,7 @@ function App() {
     <>
       <Router>
         <div className="min-h-screen">
+          {/* this test main */}
           {/* (100vh) */}
           <Navbar />
           <main className="pt-20">
