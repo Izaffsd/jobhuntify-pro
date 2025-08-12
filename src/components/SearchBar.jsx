@@ -8,7 +8,7 @@ import { useJobs } from '../context/useJobs'
 const SearchBar = () => {
 
     const { fetchJobs } = useJobs()
-    const [ query, setQuery ] = useState()
+    const [ query, setQuery ] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,7 +25,11 @@ const SearchBar = () => {
           <input
             type="text"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              // console.log("User typing:", e.target.value);
+              setQuery(e.target.value);
+            }}
+
             placeholder="Search for remote jobs... (e.g., React Developer)"
             className="input input-bordered w-full pl-12 pr-4 h-14 text-lg shadow-lg"
           />
