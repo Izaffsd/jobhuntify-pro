@@ -3,3 +3,22 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefers-dark;
 }
+
+/* Default placeholder size */
+.responsive-placeholder::placeholder {
+  font-size: 1rem; /* 16px */
+}
+
+/* Small screens (≥ 640px) */
+@media (min-width: 640px) {
+  .responsive-placeholder::placeholder {
+    font-size: 1.05rem; /* 20px */
+  }
+}
+
+/* Medium screens (≥ 768px) */
+@media (min-width: 768px) {
+  .responsive-placeholder::placeholder {
+    font-size: 1.2rem; /* 24px */
+  }
+}

@@ -18,7 +18,7 @@ function App() {
         <div className="min-h-screen">
           {/* (100vh) */}
           <Navbar />
-          <main className="pt-20">
+          <main className="pt-16">
             <Routes>
               {/* default / index */}
               <Route path="/" element={<HomePage />} />

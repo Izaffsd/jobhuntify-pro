@@ -26,17 +26,17 @@ const SearchBar = () => {
             type="text"
             value={query}
             onChange={(e) => {
-              // console.log("User typing:", e.target.value);
+              console.log("User typing:", e.target.value);
               setQuery(e.target.value);
             }}
 
             placeholder="Search for remote jobs... (e.g., React Developer)"
-            className="input input-bordered w-full pl-12 pr-4 h-14 text-lg shadow-lg"
+            className=" input input-bordered w-full pl-6 pr-4 h-12 text-lg shadow-lg responsive-placeholder"
           />
         </div>
         <button
           type="submit"
-          className="btn btn-primary absolute right-2 top-2 bottom-2"
+          className="btn btn-primary absolute right-2 top-1 bottom-1"
         >
           Search
         </button>

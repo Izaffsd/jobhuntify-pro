@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BriefcaseBusiness, Heart, ClipboardClock, Menu } from "lucide-react";
+import { BriefcaseBusiness, Heart, ClipboardClock, Menu, Search } from "lucide-react";
 
 // CONFIGURATION
 const CONFIG = {
@@ -12,7 +12,7 @@ const CONFIG = {
   },
   
   navItems: [
-    { path: "/", label: "Search", icon: BriefcaseBusiness, desktop: false },
+    { path: "/", label: "Search", icon: Search, desktop: true },
     { path: "/wishlist", label: "Wishlist", icon: Heart, desktop: true },
     { path: "/tracker", label: "Tracker", icon: ClipboardClock, desktop: true }
   ],

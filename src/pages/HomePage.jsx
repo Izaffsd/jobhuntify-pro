@@ -1,26 +1,26 @@
 import { useEffect } from 'react';
-import { Briefcase, Loader } from 'lucide-react';
+import { BriefcaseBusiness, Loader } from 'lucide-react';
 import   SearchBar  from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 
 import { useJobs } from '../context/useJobs';
 
 const HomePage = () => {
-  const { jobs, loading, error, fetchJobs } = useJobs();
+  const { jobs, loading, error, fetchJobs, fetched } = useJobs();
   
 useEffect(() => {
-  if (jobs.length === 0) {
-    fetchJobs('developer');
+  if (!fetched) {
+    fetchJobs('develop');
   }
-}, [jobs.length, fetchJobs]);
+}, [fetched, fetchJobs]);
 
-
+console.log('loading:', loading, 'error:', error, 'jobs:', jobs.length);
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <div className="text-center mb-12">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Briefcase className="h-12 w-12 text-primary" />
+          <BriefcaseBusiness className="h-12 w-12 text-primary" />
           <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             JobHuntify Pro
           </h1>
@@ -53,7 +53,7 @@ useEffect(() => {
             <div className="text-6xl mb-4">🔍</div>
             <h3 className="text-2xl font-bold mb-2">No jobs found</h3>
             <p className="text-base-content/70">
-              Try searching for different keywords to find opportunities.
+              Try searching for different keywords or add more keywordsto find opportunities.
             </p>
           </div>
         ) : (
@@ -63,7 +63,7 @@ useEffect(() => {
                 {jobs.length} Job{jobs.length !== 1 ? 's' : ''} Found
               </h2>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {jobs.map((job) => (
                 <JobCard key={job.id} job={job} />
