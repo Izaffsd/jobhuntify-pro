@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import WishListPage from "./pages/WishListPage";
 import TrackerPage from "./pages/TrackerPage";
 import NotFound from "./pages/NotFound";
+import JobModal from './components/JobModal.jsx';
 
 
 function App() {
@@ -30,9 +31,9 @@ function App() {
                   {/* <TestCom propName={name} /> */}
                 </>
                 } />
-
             </Routes>
           </main>
+            <JobModal />
         </div>
       </Router>
     </>

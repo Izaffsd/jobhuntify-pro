@@ -34,8 +34,8 @@ export const JobProvider = ({ children }) => {
   const abortControllerRef = useRef(null);
 
   const fetchJobs = useCallback((query = '') => {
-    // ✅ Do not search if less than 3 characters
-    if (query.trim().length < 3) {
+    // ✅ Do not search if less than 2 characters
+    if (query.trim().length < 2) {
       dispatch({ type: 'SET_JOBS', payload: [] });
       return;
     }
@@ -64,14 +64,20 @@ export const JobProvider = ({ children }) => {
         const data = await response.json();
         const jobs = data.jobs || [];
 
-        // Custom filter — title, company_name, category only
+        // 🔍 Custom filter — match title, company_name, category, skills, and tags
         const q = query.toLowerCase();
-        const filtered = jobs.filter(
-          (job) =>
-            job.title?.toLowerCase().includes(q) ||
-            job.company_name?.toLowerCase().includes(q) ||
-            job.category?.toLowerCase().includes(q)
-        );
+        const filtered = jobs.filter((job) => {
+          const titleMatch = job.title?.toLowerCase().includes(q);
+          const companyMatch = job.company_name?.toLowerCase().includes(q);
+
+          // Tags array check
+          const tagsMatch = job.tags?.some(tag => tag.toLowerCase().includes(q));
+
+          // Skills array check (if exists)
+          const skillsMatch = job.skills?.some(skill => skill.toLowerCase().includes(q));
+
+          return titleMatch || companyMatch || tagsMatch || skillsMatch;
+        });
 
         cacheRef.current[query] = filtered;
         dispatch({ type: 'SET_JOBS', payload: filtered });
