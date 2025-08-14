@@ -1,6 +1,7 @@
 import { useReducer, useCallback, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { JobContext } from './JobContext';
+// import { Toast } from '../components/ToastContainer';
 
 const initialState = {
   jobs: [],
@@ -8,6 +9,7 @@ const initialState = {
   error: null,
   selectedJob: null,
   fetched: false,
+  toasts: []
 };
 
 const jobReducer = (state, action) => {
@@ -20,6 +22,10 @@ const jobReducer = (state, action) => {
       return { ...state, error: action.payload, loading: false };
     case 'SET_SELECTED_JOB':
       return { ...state, selectedJob: action.payload };
+    case 'ADD_TOAST':
+      return { ...state, toasts: [...state.toasts, { ...action.payload, id: Date.now() }] };
+    case 'REMOVE_TOAST':
+      return { ...state, toasts: state.toasts.filter(toast => toast.id !== action.payload) };
     default:
       return state;
   }
@@ -32,6 +38,18 @@ export const JobProvider = ({ children }) => {
   const debounceTimeoutRef = useRef(null);
   const cacheRef = useRef({});
   const abortControllerRef = useRef(null);
+
+  const showToast = (message, type = 'info') => {
+    dispatch({
+      type: 'ADD_TOAST',
+      payload: { message, type }
+    });
+  };
+
+  const removeToast = (id) => {
+    dispatch({ type: 'REMOVE_TOAST', payload: id });
+  };
+
 
   const fetchJobs = useCallback((query = '') => {
     // ✅ Do not search if less than 2 characters
@@ -64,7 +82,7 @@ export const JobProvider = ({ children }) => {
         const data = await response.json();
         const jobs = data.jobs || [];
 
-        // 🔍 Custom filter — match title, company_name, category, skills, and tags
+        // 🔍 Custom filter — match title, company_name, skills, and tags
         const q = query.toLowerCase();
         const filtered = jobs.filter((job) => {
           const titleMatch = job.title?.toLowerCase().includes(q);
@@ -115,6 +133,8 @@ export const JobProvider = ({ children }) => {
         addToWishlist,
         removeFromWishlist,
         isInWishlist,
+        showToast,
+        removeToast,
         dispatch,
       }}
     >
