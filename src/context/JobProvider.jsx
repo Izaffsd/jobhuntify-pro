@@ -9,6 +9,14 @@ const initialState = {
   error: null,
   selectedJob: null,
   fetched: false,
+  searchQuery: '',
+  filters: {
+    category: '',
+    jobType: '',
+    location: '',
+    sortBy: 'newest'
+  },
+  searchHistory: [],
   toasts: []
 };
 
@@ -20,21 +28,24 @@ const jobReducer = (state, action) => {
       return { ...state, jobs: action.payload, loading: false, error: null, fetched: true };
     case 'SET_ERROR':
       return { ...state, error: action.payload, loading: false };
-    case 'SET_SELECTED_JOB':
+      case 'SET_SELECTED_JOB':
       return { ...state, selectedJob: action.payload };
     case 'ADD_TOAST':
       return { ...state, toasts: [...state.toasts, { ...action.payload, id: Date.now() }] };
     case 'REMOVE_TOAST':
       return { ...state, toasts: state.toasts.filter(toast => toast.id !== action.payload) };
+    case 'SET_FILTERS':
+      return { ...state, filters: { ...state.filters, ...action.payload }}
     default:
       return state;
   }
 };
-
+    
 export const JobProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(jobReducer, initialState);
-  const [wishlist, setWishlist] = useLocalStorage('jobhuntify-wishlist', []);
-
+      const [state, dispatch] = useReducer(jobReducer, initialState);
+      const [wishlist, setWishlist] = useLocalStorage('jobhuntify-wishlist', []);
+      const [searchHistory, setSearchHistory] = useLocalStorage('jobhuntify-search-history', []);
+      
   const debounceTimeoutRef = useRef(null);
   const cacheRef = useRef({});
   const abortControllerRef = useRef(null);
@@ -52,11 +63,15 @@ export const JobProvider = ({ children }) => {
 
 
   const fetchJobs = useCallback((query = '') => {
-    // ✅ Do not search if less than 2 characters
-    if (query.trim().length < 2) {
-      dispatch({ type: 'SET_JOBS', payload: [] });
-      return;
-    }
+     const trimmedQuery = query.trim();
+
+  // ✅ Only fetch & save if query has 2+ characters
+      if (trimmedQuery.length < 2) return;
+
+    setSearchHistory((prev) => {
+      const updated = [trimmedQuery, ...prev.filter((item) => item !== trimmedQuery)];
+      return updated.slice(0, 10); // Keep only last 10 searches
+    });
 
     if (debounceTimeoutRef.current) clearTimeout(debounceTimeoutRef.current);
 
@@ -106,7 +121,7 @@ export const JobProvider = ({ children }) => {
         }
       }
     }, 500);
-  }, []);
+  }, [setSearchHistory]);
 
   const addToWishlist = (job) => {
     if (wishlist.find((item) => item.id === job.id)) {
@@ -130,6 +145,7 @@ export const JobProvider = ({ children }) => {
         ...state,
         wishlist,
         fetchJobs,
+        searchHistory,
         addToWishlist,
         removeFromWishlist,
         isInWishlist,
