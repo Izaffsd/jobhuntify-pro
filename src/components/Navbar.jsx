@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BriefcaseBusiness, Heart, ClipboardClock, Menu, Search } from "lucide-react";
-
+import { useJobs } from "../context/useJobs";
 // CONFIGURATION
 const CONFIG = {
   // App branding
@@ -38,6 +38,7 @@ const STYLES = {
 };
 
 const Navbar = () => {
+  const { wishlist } = useJobs()
   const [isDark, setIsDark] = useState(false);
   const location = useLocation();
 
@@ -71,7 +72,8 @@ const Navbar = () => {
         to={item.path}
         className={`${STYLES.link} ${active ? STYLES.active : STYLES.inactive}`}
       >
-        {(mobile || item.desktop) && <Icon className="w-4 h-4" />}
+        {(mobile || item.desktop) && <Icon className="w-4 h-4" /> }
+        
         {item.label}
       </Link>
     );
@@ -82,6 +84,12 @@ const Navbar = () => {
     CONFIG.navItems.map((item) => (
       <li key={item.path}>
         <NavItem item={item} mobile={mobile} />
+            {/* Counter hanya untuk Wishlist */}
+          {item.label === "Wishlist" && wishlist.length > 0 && (
+            <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+              {wishlist.length}
+            </span>
+          )}
       </li>
     ));
 

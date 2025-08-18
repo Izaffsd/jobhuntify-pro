@@ -32,7 +32,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!fetched) {
-      fetchJobs("it");
+      fetchJobs("develop");
     }
   }, [fetched, fetchJobs]);
 
