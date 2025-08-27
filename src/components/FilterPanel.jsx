@@ -7,7 +7,6 @@ const FilterPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const categories = [
-    'Software Development',
     'Data Analysis',
     'Design',
     'Marketing',
@@ -16,8 +15,7 @@ const FilterPanel = () => {
     'Sales',
     'Writing',
     'Finance',
-    'DevOps',
-    'Account'
+    'DevOps'
   ];
 
   const jobTypes = [
