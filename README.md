@@ -17,13 +17,13 @@
 
 ## Tech Stack
 
-**Frontend:** React 19, React DOM, React Router DOM
-**Styling:** TailwindCSS v4, DaisyUI, Styled Components
-**Animations & Icons:** GSAP, Lucide React
-**Data Fetching:** Remotive API, Fetch API
-**State Management:** React Context API
-**Development:** Vite, @vitejs/plugin-react-swc
-**Linting:** ESLint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh
+*Frontend:* React 19, React DOM, React Router DOM
+*Styling:* TailwindCSS v4, DaisyUI, Styled Components
+*Animations & Icons:* GSAP, Lucide React
+*Data Fetching:* Remotive API, Fetch API
+*State Management:* React Context API
+*Development:* Vite, @vitejs/plugin-react-swc
+*Linting:* ESLint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh
 
 ---
 
