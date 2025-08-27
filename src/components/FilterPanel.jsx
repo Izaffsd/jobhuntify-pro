@@ -3,7 +3,7 @@ import { Filter, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { useJobs } from '../context/useJobs';
 
 const FilterPanel = () => {
-  const { filters, dispatch } = useJobs();
+  const { filters, dispatch, fetchJobs  } = useJobs();
   const [isOpen, setIsOpen] = useState(false);
 
   const categories = [
@@ -16,7 +16,8 @@ const FilterPanel = () => {
     'Sales',
     'Writing',
     'Finance',
-    'DevOps'
+    'DevOps',
+    'Account'
   ];
 
   const jobTypes = [
@@ -34,7 +35,12 @@ const FilterPanel = () => {
 
   const updateFilter = (key, value) => {
     dispatch({ type: 'SET_FILTERS', payload: { [key]: value } });
-  };
+
+    // If category changes, fetch jobs immediately
+    if (key === 'category') {
+      fetchJobs(value || 'develop'); // fallback to default
+    }
+  }
 
   const clearFilters = () => {
     dispatch({ 
@@ -97,7 +103,7 @@ const FilterPanel = () => {
               onChange={(e) => updateFilter('category', e.target.value)}
               className="select select-bordered w-full"
             >
-              <option value="">All Categories</option>
+              <option value="">Developer</option>
               {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}

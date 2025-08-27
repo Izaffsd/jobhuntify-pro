@@ -41,7 +41,7 @@ const SearchBar = () => {
 
       {/* 👇 show only when focused */}
       {isFocused && searchHistory.length > 0 && (
-        <div className="absolute w-full mt-1">
+        <div className="absolute w-full mt-1 z-10">
           <SearchHistoryList
             onSelect={(term) => {
               setQuery(term);

@@ -3,6 +3,7 @@ import { BriefcaseBusiness, Loader } from "lucide-react";
 import SearchBar from "../components/SearchBar";
 import JobCard from "../components/JobCard";
 import FilterPanel from "../components/FilterPanel";
+import SunspotLoader from "../components/SunspotLoader"
 
 import { useJobs } from "../context/useJobs";
 
@@ -65,7 +66,12 @@ const HomePage = () => {
         <div className="lg:col-span-3">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20">
-              <Loader className="h-12 w-12 animate-spin text-primary mb-4" />
+              <SunspotLoader
+                gradientColors={["#6366F1", "#E0E7FF"]}
+                shadowColor={"#3730A3"}
+                desktopSize={"128px"}
+                mobileSize={"100px"}
+              />
               <p className="text-lg text-base-content/70">
                 Searching for amazing jobs...
               </p>

@@ -14,7 +14,7 @@ const CONFIG = {
   navItems: [
     { path: "/", label: "Search", icon: Search, desktop: true },
     { path: "/wishlist", label: "Wishlist", icon: Heart, desktop: true },
-    { path: "/tracker", label: "Tracker", icon: ClipboardClock, desktop: true }
+    // { path: "/tracker", label: "Tracker", icon: ClipboardClock, desktop: true }
   ],
 
   // Theme settings

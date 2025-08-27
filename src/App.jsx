@@ -24,7 +24,7 @@ function App() {
               {/* default / index */}
               <Route path="/" element={<HomePage />} />
               <Route path="/wishlist" element={<WishListPage />} />
-              <Route path="/tracker" element={<TrackerPage />} />
+              {/* <Route path="/tracker" element={<TrackerPage />} /> */}
               <Route path="*" element={
                 <>
                   <NotFound propName={name} />
