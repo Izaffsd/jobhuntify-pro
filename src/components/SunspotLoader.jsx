@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { gsap } from "gsap";
 
 const StyledDiv = styled.div`
-  width: ${(props) => props.sizeSVG}px;
-  height: ${(props) => props.sizeSVG}px;
-  background: ${(props) => props.background};
+  width: ${(props) => props.$sizeSVG}px;
+  height: ${(props) => props.$sizeSVG}px;
+  background: ${(props) => props.$background};
 `;
 
 const StyledSVG = styled.svg`
@@ -16,14 +16,14 @@ const StyledSVG = styled.svg`
 `;
 
 const SunspotLoader = ({
-  className = `sunspotloader`,
-  background = `transparent`,
+  className = "sunspotloader",
+  background = "transparent",
   gradientColors = ["#FF4F59", "#FFFC31"],
-  shadowColor = `#5B1E00`,
-  shadowOpacity = `0.05`,
-  size = `64px`,
-  desktopSize = ``,
-  mobileSize = ``,
+  shadowColor = "#5B1E00",
+  shadowOpacity = "0.05",
+  size = "64px",
+  desktopSize = "",
+  mobileSize = "",
 }) => {
   let colorsToFill = [];
   if (gradientColors.constructor === String) {
@@ -113,7 +113,11 @@ const SunspotLoader = ({
   }, []);
 
   return (
-    <StyledDiv sizeSVG={sizeSVG} background={background} className={className}>
+    <StyledDiv
+      $sizeSVG={sizeSVG}
+      $background={background}
+      className={className}
+    >
       <StyledSVG
         id="mainSVG"
         xmlns="http://www.w3.org/2000/svg"

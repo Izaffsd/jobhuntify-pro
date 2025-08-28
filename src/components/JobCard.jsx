@@ -1,4 +1,4 @@
-import { MapPin, Building, Calendar, Heart, ExternalLink } from 'lucide-react';
+import { MapPin, Calendar, Heart, ExternalLink, DollarSign } from 'lucide-react';
 import { useJobs } from '../context/useJobs';
 
 
@@ -28,15 +28,35 @@ const JobCard = ({ job }) => {
   return (
     <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="card-body p-6">
+        <div className="flex items-center gap-3 mb-4">
+          {job.company_logo ? (
+            <img
+              src={job.company_logo}
+              alt={`${job.company_name} logo`}
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.src = "/default-logo.png"; // fallback image in public/
+                e.currentTarget.onerror = null; // prevent infinite loop
+              }}
+              className="h-12 w-12 rounded object-contain"
+            />
+          ) : (
+            <img
+              src="/default-logo.png"
+              alt="Default company logo"
+              className="h-12 w-12 rounded object-contain"
+            />
+          )}
+
+          <div className="flex items-center gap-2 text-base-content/70">
+            <span className="font-medium">{job.company_name}</span>
+          </div>
+        </div>
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h3 className="card-title text-lg font-bold mb-2">
+            <h3 className="card-title text-lg font-bold mb-2 line-clamp-2">
               {job.title}
             </h3>
-            <div className="flex items-center gap-2 text-base-content/70 mb-2">
-              <Building className="h-4 w-4" />
-              <span className="font-medium">{job.company_name}</span>
-            </div>
           </div>
           <button
             onClick={handleWishlistToggle}
@@ -59,6 +79,12 @@ const JobCard = ({ job }) => {
             <Calendar className="h-4 w-4" />
             <span>{formatDate(job.publication_date)}</span>
           </div>
+          {job.salary && (
+            <div className="flex items-center gap-2 text-sm text-base-content/60">
+              <DollarSign className="h-4 w-4" />
+              <span>{job.salary}</span>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -80,8 +106,10 @@ const JobCard = ({ job }) => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-outline btn-sm"
-          >
+            aria-label={`View job details for ${job.title}`}
+          > hi
             <ExternalLink className="h-4 w-4" />
+            
           </a>
         </div>
       </div>
