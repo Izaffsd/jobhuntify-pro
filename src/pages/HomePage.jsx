@@ -1,14 +1,18 @@
-import { useEffect } from "react";
-import { BriefcaseBusiness, Loader } from "lucide-react";
+import { useEffect, useState } from "react";
+import { BriefcaseBusiness } from "lucide-react";
 import SearchBar from "../components/SearchBar";
 import JobCard from "../components/JobCard";
 import FilterPanel from "../components/FilterPanel";
-import SunspotLoader from "../components/SunspotLoader"
+import SunspotLoader from "../components/SunspotLoader";
+import Pagination from "../components/Pagination"; // 👈 Import Pagination
 
 import { useJobs } from "../context/useJobs";
 
+const JOBS_PER_PAGE = 20;
+
 const HomePage = () => {
   const { jobs, loading, error, fetchJobs, fetched, filters } = useJobs();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredJobs = jobs.filter((job) => {
     return (
@@ -21,6 +25,7 @@ const HomePage = () => {
     );
   });
 
+  // Sorting
   if (filters.sortBy === "oldest") {
     filteredJobs.sort(
       (a, b) => new Date(a.publication_date) - new Date(b.publication_date)
@@ -31,11 +36,28 @@ const HomePage = () => {
     filteredJobs.sort((a, b) => a.title.localeCompare(b.title));
   }
 
+  // Pagination logic
+  const totalJobs = filteredJobs.length;
+  const totalPages = Math.ceil(totalJobs / JOBS_PER_PAGE);
+  const startIndex = (currentPage - 1) * JOBS_PER_PAGE;
+  const endIndex = startIndex + JOBS_PER_PAGE;
+  const jobsToShow = filteredJobs.slice(startIndex, endIndex);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
+
   useEffect(() => {
     if (!fetched) {
-      fetchJobs("develop");
+      fetchJobs("dev");
     }
   }, [fetched, fetchJobs]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -96,18 +118,27 @@ const HomePage = () => {
             </div>
           ) : (
             <>
-              <div className="mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-bold">
-                  {filteredJobs.length} Job
-                  {filteredJobs.length !== 1 ? "s" : ""} Found
+                  {totalJobs} Job{totalJobs !== 1 ? "s" : ""} Found
                 </h2>
+                <div className="text-sm text-base-content/60">
+                  Page {currentPage} of {totalPages} • Showing {jobsToShow.length} jobs
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredJobs.map((job) => (
+                {jobsToShow.map((job) => (
                   <JobCard key={job.id} job={job} />
                 ))}
               </div>
+
+              {/* Pagination */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </>
           )}
         </div>

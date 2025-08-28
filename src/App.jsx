@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 
 import Navbar from "./components/Navbar";
 import JobModal from './components/JobModal.jsx';
@@ -10,7 +9,6 @@ import NotFound from "./pages/NotFound";
 
 
 function App() {
-  const [name] = useState('iskandar')
   return (
     <>
       <Router>

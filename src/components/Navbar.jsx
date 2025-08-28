@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BriefcaseBusiness, Heart, ClipboardClock, Menu, Search } from "lucide-react";
+import { BriefcaseBusiness, Heart, Menu, Search } from "lucide-react";
 import { useJobs } from "../context/useJobs";
 // CONFIGURATION
 const CONFIG = {

@@ -1,9 +1,35 @@
+import { useState, useRef, useEffect } from 'react';
 import { MapPin, Calendar, Heart, ExternalLink, DollarSign } from 'lucide-react';
 import { useJobs } from '../context/useJobs';
 
-
 const JobCard = ({ job }) => {
   const { dispatch, addToWishlist, removeFromWishlist, isInWishlist } = useJobs();
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isImageError, setIsImageError] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const cardRef = useRef(null);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleViewDetails = () => {
     dispatch({ type: 'SET_SELECTED_JOB', payload: job });
@@ -25,33 +51,48 @@ const JobCard = ({ job }) => {
       year: 'numeric'
     });
   };
+
   return (
-    <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300">
+    <div ref={cardRef} className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="card-body p-6">
         <div className="flex items-center gap-3 mb-4">
-          {job.company_logo ? (
-            <img
-              src={job.company_logo}
-              alt={`${job.company_name} logo`}
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.src = "/default-logo.png"; // fallback image in public/
-                e.currentTarget.onerror = null; // prevent infinite loop
-              }}
-              className="h-12 w-12 rounded object-contain"
-            />
+          {isInView ? (
+            <>
+              {!isImageError && job.company_logo ? (
+                <img
+                  src={job.company_logo}
+                  alt={`${job.company_name} logo`}
+                  loading="lazy"
+                  className={`h-12 w-12 rounded object-contain transition-opacity duration-300 ${
+                    isImageLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  onLoad={() => setIsImageLoaded(true)}
+                  onError={() => {
+                    setIsImageError(true);
+                    setIsImageLoaded(true);
+                  }}
+                />
+              ) : (
+                <img
+                  src="/default-logo.png"
+                  alt="Default company logo"
+                  className="h-12 w-12 rounded object-contain"
+                />
+              )}
+              
+              {!isImageLoaded && !isImageError && job.company_logo && (
+                <div className="h-12 w-12 rounded bg-base-200 animate-pulse" />
+              )}
+            </>
           ) : (
-            <img
-              src="/default-logo.png"
-              alt="Default company logo"
-              className="h-12 w-12 rounded object-contain"
-            />
+            <div className="h-12 w-12 rounded bg-base-200 animate-pulse" />
           )}
 
           <div className="flex items-center gap-2 text-base-content/70">
             <span className="font-medium">{job.company_name}</span>
           </div>
         </div>
+
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
             <h3 className="card-title text-lg font-bold mb-2 line-clamp-2">
@@ -107,14 +148,13 @@ const JobCard = ({ job }) => {
             rel="noopener noreferrer"
             className="btn btn-outline btn-sm"
             aria-label={`View job details for ${job.title}`}
-          > hi
+          >
             <ExternalLink className="h-4 w-4" />
-            
           </a>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default JobCard
+export default JobCard;

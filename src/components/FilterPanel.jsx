@@ -32,11 +32,12 @@ const FilterPanel = () => {
   ];
 
   const updateFilter = (key, value) => {
-    dispatch({ type: 'SET_FILTERS', payload: { [key]: value } });
-
-    // If category changes, fetch jobs immediately
+    // NEW: Clear jobs first, prevent flickering
     if (key === 'category') {
-      fetchJobs(value || 'develop'); // fallback to default
+      dispatch({ type: 'SET_JOBS', payload: [] }); // Clear old jobs
+      dispatch({ type: 'SET_LOADING', payload: true }); // Show loading
+      dispatch({ type: 'SET_FILTERS', payload: { [key]: value } }); // Update filter
+      fetchJobs(value || 'dev'); // Fetch fresh data
     }
   }
 
