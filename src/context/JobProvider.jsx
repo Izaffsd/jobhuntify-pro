@@ -1,7 +1,6 @@
 import { useReducer, useCallback, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { JobContext } from './JobContext';
-// import { Toast } from '../components/ToastContainer';
 
 const initialState = {
   jobs: [],
@@ -65,7 +64,7 @@ export const JobProvider = ({ children }) => {
   const fetchJobs = useCallback((query = '') => {
      const trimmedQuery = query.trim();
 
-  // ✅ Only fetch & save if query has 2+ characters
+  // Only fetch & save if query has 2+ characters
       if (trimmedQuery.length < 2) return;
 
     setSearchHistory((prev) => {
@@ -97,7 +96,7 @@ export const JobProvider = ({ children }) => {
         const data = await response.json();
         const jobs = data.jobs || [];
 
-        // 🔍 Custom filter — match title, company_name, skills, and tags
+        // Custom filter — match title, company_name, skills, and tags
         const q = query.toLowerCase();
         const filtered = jobs.filter((job) => {
           const titleMatch = job.title?.toLowerCase().includes(q);

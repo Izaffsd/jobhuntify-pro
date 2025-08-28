@@ -53,6 +53,6 @@ The app will run at [http://localhost:5173](http://localhost:5173).
 
 ## API
 
-**Endpoint:** `https://remotive.io/api/remote-jobs`
-**Example Search:** `https://remotive.io/api/remote-jobs?search=developer`
+**Endpoint:** `https://remotive.com/api/remote-jobs`
+**Example Search:** `https://remotive.com/api/remote-jobs?search=developer`
 
