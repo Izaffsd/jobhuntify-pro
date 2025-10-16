@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { useJobs } from '../context/useJobs';
 import { SearchHistoryList } from './SearchHistoryList';
@@ -6,7 +6,7 @@ import { SearchHistoryList } from './SearchHistoryList';
 const SearchBar = () => {
   const { fetchJobs, searchHistory } = useJobs();
   const [query, setQuery] = useState('');
-  const [isFocused, setIsFocused] = useState(false); // 👈 track focus state
+  const [isFocused, setIsFocused] = useState(false); // track focus state
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,8 +24,8 @@ const SearchBar = () => {
           <input
             type="text"
             value={query}
-            onFocus={() => setIsFocused(true)} // 👈 show on focus
-            onBlur={() => setTimeout(() => setIsFocused(false), 150)} // 👈 hide after blur
+            onFocus={() => setIsFocused(true)} // show on focus
+            onBlur={() => setTimeout(() => setIsFocused(false), 150)} // hide after blur
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for remote jobs... (e.g., React Developer)"
             className="input input-bordered w-full pl-6 pr-4 h-12 text-lg shadow-lg"
@@ -39,7 +39,7 @@ const SearchBar = () => {
         </button>
       </form>
 
-      {/* 👇 show only when focused */}
+      {/* show only when focused */}
       {isFocused && searchHistory.length > 0 && (
         <div className="absolute w-full mt-1 z-10">
           <SearchHistoryList

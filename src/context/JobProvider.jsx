@@ -136,6 +136,11 @@ export const JobProvider = ({ children }) => {
     alert('Job removed from wishlist!');
   };
 
+  const clearWishlist = () => {
+    setWishlist([]); // instantly clears wishlist
+    alert('All jobs removed from wishlist!');
+  };
+
   const isInWishlist = (jobId) => wishlist.some((job) => job.id === jobId);
 
   return (
@@ -147,6 +152,7 @@ export const JobProvider = ({ children }) => {
         searchHistory,
         addToWishlist,
         removeFromWishlist,
+        clearWishlist,
         isInWishlist,
         showToast,
         removeToast,

@@ -4,11 +4,11 @@ import { useJobs } from '../context/useJobs';
 import { Link } from 'react-router-dom';
 
 const WishListPage = () => {
-    const { wishlist, removeFromWishlist } = useJobs();
+    const { wishlist, clearWishlist  } = useJobs();
 
   const handleClearAll = () => {
     if (window.confirm('Are you sure you want to clear your entire wishlist?')) {
-      wishlist.forEach(job => removeFromWishlist(job.id));
+      clearWishlist();
     }
   };
 

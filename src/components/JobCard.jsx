@@ -74,7 +74,7 @@ const JobCard = ({ job }) => {
                 />
               ) : (
                 <img
-                  src="/default-logo.png"
+                  src="/images/default-logo.png"
                   alt="Default company logo"
                   className="h-12 w-12 rounded object-contain"
                 />

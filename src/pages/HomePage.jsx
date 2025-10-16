@@ -64,14 +64,14 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className="text-center mb-12">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <BriefcaseBusiness className="h-12 w-12 text-primary" />
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            JobHuntify Pro
+          <h1 className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 dark:from-blue-300 dark:via-indigo-400 dark:to-purple-500 bg-clip-text text-transparent pb-4 tracking-wide drop-shadow-[0_2px_8px_rgba(59,130,246,0.3)] relative transition-all duration-300">
+            Work Anywhere. Grow Everywhere.
+            <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 dark:from-blue-300 dark:via-indigo-400 dark:to-purple-500 rounded-full blur-sm opacity-80"></div>
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500 dark:from-blue-200 dark:via-indigo-300 dark:to-purple-400 rounded-full"></div>
           </h1>
         </div>
         <p className="text-xl text-base-content/70 max-w-2xl mx-auto mb-8">
-          Discover your next remote opportunity with advanced search, smart
-          filtering, and powerful application tracking tools.
+          Explore curated remote jobs designed for your growth. With smart matching and effortless applications, landing your next role has never been this smooth.
         </p>
         <SearchBar />
       </div>

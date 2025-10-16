@@ -8,7 +8,7 @@ const CONFIG = {
   brand: {
     name: "JobHuntify",
     icon: BriefcaseBusiness,
-    colors: "from-primary to-secondary"
+    colors: "font-bold bg-gradient-to-r from-blue-300 via-blue-400 to-purple-600 bg-clip-text text-transparent"
   },
   
   navItems: [

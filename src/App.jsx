@@ -20,11 +20,7 @@ function App() {
               {/* default / index */}
               <Route path="/" element={<HomePage />} />
               <Route path="/wishlist" element={<WishListPage />} />
-              <Route path="*" element={
-                <>
-                  <NotFound propName={name} />
-                </>
-                } />
+              <Route path="*" element={ <NotFound />} />
             </Routes>
           </main>
             <JobModal />

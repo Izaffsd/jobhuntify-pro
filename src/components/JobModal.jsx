@@ -1,6 +1,5 @@
 import { X, Heart, ExternalLink, MapPin, Building, Calendar, DollarSign, Tag, StickyNote } from 'lucide-react';
 import { useJobs } from '../context/useJobs';
-import { JobProvider } from '../context/JobProvider';
 
 const JobModal = () => {
     const { 
