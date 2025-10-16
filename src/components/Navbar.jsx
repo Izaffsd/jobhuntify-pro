@@ -42,7 +42,7 @@ const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
   const location = useLocation();
 
-  // 🌙 Theme Management
+  // Theme Management
   useEffect(() => {
     const saved = localStorage.getItem(CONFIG.theme.key);
     const system = window.matchMedia("(prefers-color-scheme: dark)").matches;
